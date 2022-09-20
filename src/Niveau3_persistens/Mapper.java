@@ -30,10 +30,38 @@ public class Mapper {
         }
     }
 
-
-
     static void sletPostnr() {
-        System.out.println("Jeg er en tom metode, husk at bygge mig :)");
+
+        // der mangler en try / catch der giver en besked,
+        // hvis en låner er registret med postnummeret og derfor ikke kan slettes
+
+        String sql = "delete from Postnr where Postnr = ?";
+
+        try (Connection con = ConnectionConfig.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);) {
+
+            int postNr = TerminalIO.getInt("Skriv postnummeret du vil slette: ");
+
+            ps.setInt(1, postNr);
+
+
+            int res = ps.executeUpdate();
+
+            if (res > 0) {
+
+                System.out.println("Postnummeret er nu slettet");
+
+            } else {
+
+                System.out.println("Der findes ikke et postnummer med tallene: " + "\"" + postNr);
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     static void opretBog() {
@@ -65,7 +93,7 @@ public class Mapper {
     static void sletBog() {
 
         // der mangler en try / catch der giver en besked,
-        // hvis boger er udlånt og derfor ikke kan slettes
+        // hvis bogen er udlånt og derfor ikke kan slettes
 
         String sql = "delete from Bogtabel where Titel = ?";
 
