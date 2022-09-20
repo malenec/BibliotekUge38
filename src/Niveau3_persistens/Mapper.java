@@ -80,6 +80,28 @@ public class Mapper {
 
     static void opretUdlån() {
 
+        String sql = "INSERT INTO Udlånstabel (BogID, LånerID) VALUES (?, ?)";
+
+        try (Connection con = ConnectionConfig.getConnection();
+
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ) {
+
+            ps.setInt(1, TerminalIO.getInt("Indtast bogens ID nummer: "));
+            ps.setInt(2, TerminalIO.getInt("Indtast dit lånernummer: "));
+
+            ps.executeUpdate();
+
+            ResultSet ids = ps.getGeneratedKeys();
+            ids.next();
+            int id = ids.getInt(1);
+
+            System.out.println("Du har nu lånt bogen, god læselyst");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
