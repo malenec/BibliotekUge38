@@ -19,6 +19,28 @@ public class Mapper {
 
     static void opretBog() {
 
+        String sql = "INSERT INTO Bogtabel (Forfatternavn, Titel, Udgivelsesår) VALUES (?, ?, ?)";
+
+        try (Connection con = ConnectionConfig.getConnection();
+
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ) {
+
+            ps.setString(1, TerminalIO.getString("Indtast forfatterens navn: "));
+            ps.setString(2, TerminalIO.getString("Indtast bogens titel: "));
+            ps.setInt(3, TerminalIO.getInt("Indtast bogens udgivelsesår: "));
+
+            ps.executeUpdate();
+
+            ResultSet ids = ps.getGeneratedKeys();
+            ids.next();
+            int id = ids.getInt(1);
+
+            System.out.println("Du har nu oprettet en ny bog, bogens ID er nummer " + id);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     static void sletBog() {
@@ -36,7 +58,7 @@ public class Mapper {
 
             ps.setString(1, TerminalIO.getString("Indtast dit navn: "));
             ps.setString(2, TerminalIO.getString("Indtast din adresse: "));
-            ps.setString(3, TerminalIO.getString("Indtast dit postnr: "));
+            ps.setInt(3, TerminalIO.getInt("Indtast dit postnr: "));
 
             ps.executeUpdate();
 
