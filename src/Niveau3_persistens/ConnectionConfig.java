@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class ConnectionConfig {
 
-    public static Connection getConnectionMalene() {
+    public static Connection getConnection() {
         Connection connection = null;
         String url = "jdbc:mysql://localhost:3306/Bibliotek?serverTimezone=CET&useSSL=false";
         String user = "root";
