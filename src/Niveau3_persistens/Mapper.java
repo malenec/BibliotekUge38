@@ -10,11 +10,11 @@ import java.sql.Statement;
 public class Mapper {
 
     static void opretPostnr() {
-
+        System.out.println("Jeg er en tom metode, husk at bygge mig :)");
     }
 
     static void sletPostnr() {
-
+        System.out.println("Jeg er en tom metode, husk at bygge mig :)");
     }
 
     static void opretBog() {
@@ -44,6 +44,37 @@ public class Mapper {
     }
 
     static void sletBog() {
+
+        // der mangler en try / catch der giver en besked,
+        // hvis boger er udlånt og derfor ikke kan slettes
+
+        String sql = "delete from Bogtabel where Titel = ?";
+
+        try (Connection con = ConnectionConfig.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);) {
+
+            String titel = TerminalIO.getString("Skriv navnet på den bog du vil slette: ");
+
+            ps.setString(1, titel);
+
+
+            int res = ps.executeUpdate();
+
+            if (res > 0) {
+
+                System.out.println("Bogen " + "\"" + titel + "\"" + " er nu slettet");
+
+            } else {
+
+                System.out.println("Der findes ikke en bog med titlen: " + "\"" + titel);
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -75,6 +106,36 @@ public class Mapper {
     }
 
     static void sletLåner() {
+
+        // der mangler en try / catch der giver en besked,
+        // hvis låneren stadig har aktive udlån og derfor ikke kan slettes
+
+        String sql = "delete from Lånertabel where Navn = ?";
+
+        try (Connection con = ConnectionConfig.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);) {
+
+            String lånerNavn = TerminalIO.getString("Skriv navnet på den låner du vil slette: ");
+
+            ps.setString(1, lånerNavn);
+
+
+            int res = ps.executeUpdate();
+
+            if (res > 0) {
+
+                System.out.println(lånerNavn + " er nu slettet som låner");
+
+            } else {
+
+                System.out.println("Der findes ikke en låner med navnet: " + "\"" + lånerNavn);
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -110,7 +171,7 @@ public class Mapper {
     }
 
     static void søgIUdlån() {
-
+        System.out.println("Jeg er en tom metode, husk at bygge mig :)");
     }
 
 }

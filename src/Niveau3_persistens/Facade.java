@@ -30,11 +30,11 @@ public class Facade {
         Mapper.opretUdlån();
     }
 
-    static void sletUdlån() {
+    public static void sletUdlån() {
         Mapper.sletUdlån();
     }
 
-    static void søgIUdlån() {
+    public static void søgIUdlån() {
         Mapper.søgIUdlån();
     }
 
