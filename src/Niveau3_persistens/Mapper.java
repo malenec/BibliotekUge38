@@ -10,8 +10,27 @@ import java.sql.Statement;
 public class Mapper {
 
     static void opretPostnr() {
-        System.out.println("Jeg er en tom metode, husk at bygge mig :)");
+
+        String sql = "INSERT INTO Postnr (Postnr, `By`) VALUES (?, ?);";
+
+        try (Connection con = ConnectionConfig.getConnection();
+
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ) {
+
+            ps.setInt(1, TerminalIO.getInt("Indtast postnummeret: "));
+            ps.setString(2, TerminalIO.getString("Indtast byens navn: "));
+
+            ps.executeUpdate();
+
+            System.out.println("Du har nu oprettet en ny by");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     static void sletPostnr() {
         System.out.println("Jeg er en tom metode, husk at bygge mig :)");
@@ -165,9 +184,8 @@ public class Mapper {
 
     }
 
-
     static void sletUdlån() {
-
+        System.out.println("Jeg er en tom metode, husk at bygge mig :)");
     }
 
     static void søgIUdlån() {
